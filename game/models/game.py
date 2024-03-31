@@ -48,7 +48,7 @@ class Game:
 
     def startRound(self):
         self.printer.roundStart()
-        print(list(map(mapLetters, self.cards)))
+        ##print(list(map(mapLetters, self.cards)))
         self.firstHand()
         self.printer.printCards(self.player, self.dealer)
         if not self.personaDecides(self.player, True):
