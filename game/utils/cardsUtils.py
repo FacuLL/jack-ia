@@ -1,4 +1,5 @@
 from models.card import Card
+import numpy as np
 
 def makeDeck():
     cards = []
@@ -7,14 +8,14 @@ def makeDeck():
     values = [[1, 11], [2], [3], [4], [5], [6], [7], [8], [9], [10], [10], [10], [10]]
     for suit in suits:
         for idx, letter in enumerate(letters):
-            cards.append(Card(letter, suit, values[idx]))
+            cards.append(Card(letter, suit, values[idx], idx))
     return cards
 
 def multiplyCards(cards: list[Card], times: int):
     aux = []
     for card in cards:
         for i in range(times):
-            aux.append(Card(card.letter, card.suit, card.values))
+            aux.append(Card(card.letter, card.suit, card.values, card.position))
     return aux
 
 def sumValues(cards: list[Card]):
@@ -33,6 +34,13 @@ def sumValues(cards: list[Card]):
 
 def mapLetters(card: Card):
     return card.letter
+
+def positionSum(cards: list[Card]):
+    res = np.empty(13, dtype=int)
+    res.fill(0)
+    for card in cards:
+        res[card.position]+=1
+    return res
 
 def elegirMazos():
 	mazos = 0

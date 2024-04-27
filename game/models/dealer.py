@@ -6,7 +6,7 @@ from utils.cardsUtils import sumValues
 class Dealer(Persona):
     cards = []
     
-    def decide(self, printer):
+    def decide(self, printer = None):
         return sumValues(self.cards) < 17
     
     def appendCard(self, card: Card):

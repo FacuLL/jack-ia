@@ -1,10 +1,10 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 
 from models.card import Card
 
 class Persona(ABC):
-    @abstractclassmethod
-    def decide(self, printer):
+    @abstractmethod
+    def decide(self, printer = None):
         pass
     
     def appendCard(self, card: Card):

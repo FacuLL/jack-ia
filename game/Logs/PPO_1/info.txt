@@ -1,0 +1,8 @@
+Fecha: 26/4/24
+Algoritmo: PPO
+Partidas: 500000
+Mazos: 8
+Win Reward: 1
+Lose Reward: -1
+Tie Reward: 0
+Observation space: cartas completas dealer-player-previas
