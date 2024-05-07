@@ -15,5 +15,5 @@ for episode in range(episodes):
         action = env.action_space.sample()
         obs, reward, done, truncated, info = env.step(action)
         score+=reward
-    print("Partida ", episode+1, " Puntaje ", score)
+    print("Partida ", episode+1, " Puntaje ", score, " Winrate ", info["winrate"], "%")
 env.close()

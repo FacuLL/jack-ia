@@ -1,8 +1,0 @@
-Fecha: 27/4/24
-Algoritmo: A2C
-Partidas: 2000000
-Mazos: 8
-Win Reward: 1
-Lose Reward: -1
-Tie Reward: 0
-Observation space: cartas completas dealer-player-previas

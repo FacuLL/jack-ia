@@ -8,7 +8,7 @@ from models.player import Player
 from utils.cardsUtils import makeDeck, multiplyCards, sumValues, positionSum
 
 class Enviroment(Env):
-    def __init__(self, ndecks, player: Player, dealer, winrew = 1, loserew = -1):
+    def __init__(self, ndecks, player: Player, dealer, winrew = 1, loserew = -1, ignoredRounds = 0):
         self.action_space = Discrete(2) # Hit or pass
         discreteArray = np.empty(13)
         discreteArray.fill(ndecks*4+1)
@@ -25,6 +25,7 @@ class Enviroment(Env):
         self.player = player
         self.winrew = winrew
         self.loserew = loserew
+        self.ignoredRounds = ignoredRounds
 
     def step(self, action):
         reward = 0
@@ -36,6 +37,7 @@ class Enviroment(Env):
             self.giveCard(self.player)
             if self.hasLost(self.player):
                 reward = self.loserew
+                info["result"] = "lose"
                 self.resetCards()
                 done = self.firstHand()
             state = self.generateState()
@@ -43,14 +45,18 @@ class Enviroment(Env):
         # PASS
         if not self.personaDecides(self.dealer):
             reward = self.winrew
+            info["result"] = "win"
             self.resetCards()
             done = self.firstHand()
             state = self.generateState()
             return state, reward, done, truncated, info
         if sumValues(self.player.cards) > sumValues(self.dealer.cards):
             reward = self.winrew
+            info["result"] = "win"
         elif sumValues(self.player.cards) < sumValues(self.dealer.cards):
             reward = self.loserew
+            info["result"] = "lose"
+        info["result"] = "tie"
         self.resetCards()
         done = self.firstHand()
         state = self.generateState()
@@ -61,13 +67,13 @@ class Enviroment(Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
+        info = {}
         self.resetCards()
         self.previousCards = []
         self.cards = multiplyCards(makeDeck(), self.ndecks)
         random.shuffle(self.cards)
         self.firstHand()
         state = self.generateState()
-        info = {}
         return state, info
     
     def generateState(self):
