@@ -27,6 +27,8 @@ class LoggingCallback(BaseCallback):
         ties = self.results["tie"]
         if wins != 0 or loses != 0 or ties != 0:
             self.logger.record("rollout/round_winrate", (wins / (wins + loses + ties) * 100))
+            self.logger.record("rollout/round_tierate", (ties / (wins + loses + ties) * 100))
+            self.logger.record("rollout/round_loserate", (loses / (wins + loses + ties) * 100))
         self.resetResults()
     
     def resetResults(self) -> None:
