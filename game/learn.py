@@ -34,7 +34,6 @@ both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=
 log_path = os.path.join("Logs")
 
 models = [
-    PPO("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
     PPO("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
     PPO("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
     PPO("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
