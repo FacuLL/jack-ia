@@ -17,18 +17,20 @@ class LoggingCallback(BaseCallback):
         if "result" in self.locals["infos"][0]:
             if self.locals["infos"][0]["result"] in self.results:
                 self.results[self.locals["infos"][0]["result"]]+=1
-                print(self.results)
+                # print(self.results)
         return True
     
     def _on_rollout_start(self) -> None:
         super()._on_rollout_start()
+        print("HACIENDO ROLLBACK")
         wins = self.results["win"]
         loses = self.results["lose"]
         ties = self.results["tie"]
-        if wins != 0 or loses != 0 or ties != 0:
-            self.logger.record("rollout/round_winrate", (wins / (wins + loses + ties) * 100))
+        if wins + loses != 0:
+            self.logger.record("rollout/round_winrate", (wins / (wins + loses) * 100))
+            self.logger.record("rollout/round_loserate", (loses / (wins + loses) * 100))
+        if wins + loses + ties != 0:
             self.logger.record("rollout/round_tierate", (ties / (wins + loses + ties) * 100))
-            self.logger.record("rollout/round_loserate", (loses / (wins + loses + ties) * 100))
         self.resetResults()
     
     def resetResults(self) -> None:

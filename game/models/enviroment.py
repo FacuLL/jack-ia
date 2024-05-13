@@ -8,7 +8,7 @@ from models.player import Player
 from utils.cardsUtils import makeDeck, multiplyCards, sumValues, positionSum
 
 class Enviroment(Env):
-    def __init__(self, ndecks, player: Player, dealer, winrew = 1, loserew = -1, ignoredRounds = 0):
+    def __init__(self, ndecks, player: Player, dealer, winrew = 1, loserew = -1, ignoredCards = 0):
         self.action_space = Discrete(2) # Hit or pass
         discreteArray = np.empty(13)
         discreteArray.fill(ndecks*4+1)
@@ -18,14 +18,17 @@ class Enviroment(Env):
             "cards": MultiDiscrete(discreteArray)
         })
         self.ndecks = ndecks
+        self.ignoredCards = ignoredCards
         self.cards = multiplyCards(makeDeck(), self.ndecks)
         random.shuffle(self.cards)
         self.previousCards = []
+        if self.ignoredCards > 0:
+            self.previousCards = self.cards[:self.ignoredCards-1]
+            self.cards = self.cards[self.ignoredCards:]
         self.dealer = dealer
         self.player = player
         self.winrew = winrew
         self.loserew = loserew
-        self.ignoredRounds = ignoredRounds
 
     def step(self, action):
         reward = 0
@@ -56,7 +59,8 @@ class Enviroment(Env):
         elif sumValues(self.player.cards) < sumValues(self.dealer.cards):
             reward = self.loserew
             info["result"] = "lose"
-        info["result"] = "tie"
+        else:
+            info["result"] = "tie"
         self.resetCards()
         done = self.firstHand()
         state = self.generateState()
@@ -72,6 +76,9 @@ class Enviroment(Env):
         self.previousCards = []
         self.cards = multiplyCards(makeDeck(), self.ndecks)
         random.shuffle(self.cards)
+        if self.ignoredCards > 0:
+            self.previousCards = self.cards[:self.ignoredCards-1]
+            self.cards = self.cards[self.ignoredCards:]
         self.firstHand()
         state = self.generateState()
         return state, info
