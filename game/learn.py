@@ -6,7 +6,7 @@ from models.enviroment import Enviroment
 from stable_baselines3.common.monitor import Monitor
 from models.player import Player
 from models.dealer import Dealer
-from stable_baselines3 import PPO, DQN
+from stable_baselines3 import PPO, DQN, A2C
 from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement, CallbackList
 # import wandb
 # from wandb.integration.sb3 import WandbCallback
@@ -37,18 +37,14 @@ both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=
 log_path = os.path.join("Logs")
 
 models = [
-    # PPO("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
-    # PPO("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
-    # PPO("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    # PPO("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
     DQN("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
     DQN("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
     DQN("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
+    DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    A2C("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
+    A2C("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
 ]
 
 for model in models:
