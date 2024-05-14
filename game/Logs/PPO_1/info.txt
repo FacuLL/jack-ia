@@ -1,0 +1,7 @@
+Date: 13/5/2024
+Algorithm: PPO
+Timesteps (Matches): 2000000
+Decks: 8
+Rewards (Win, Lose, Tie): 1 -1 0
+Ignored cards: 0
+Observation space: Cartas completas dealer-player-previas

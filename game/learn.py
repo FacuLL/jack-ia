@@ -1,3 +1,4 @@
+import datetime
 import os
 from utils.logsUtils import createLogFile
 from utils.callbacks import LoggingCallback
@@ -12,6 +13,8 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoMod
 
 timesteps = 2000000
 mazos = 8
+
+timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # wandb.init(
 #     project="jack-ia",
@@ -34,14 +37,28 @@ both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=
 log_path = os.path.join("Logs")
 
 models = [
-    PPO("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
-    PPO("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    PPO("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
+    # PPO("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    # PPO("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
+    # PPO("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
+    # PPO("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
+    A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    A2C("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
+    A2C("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
+    A2C("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
 ]
 
 for model in models:
     algorithm = model.__class__.__name__
-    save_path = os.path.join("RL_Models", algorithm)
+    save_path = os.path.join("RL_Models", algorithm + "_" + timestamp)
+
+    log_freq = 1
+    if algorithm == "DQN": 
+        log_freq = 100
+
     stop_callback = StopTrainingOnNoModelImprovement(
         max_no_improvement_evals=100000,
         min_evals=timesteps,
@@ -53,7 +70,7 @@ for model in models:
         best_model_save_path=save_path,
         verbose=1
     )
-    logging_callback = LoggingCallback(verbose=1)
+    logging_callback = LoggingCallback(verbose=1, log_freq=log_freq)
     # wandb_callback = WandbCallback(verbose=2, log="all", gradient_save_freq=100)
     callbacks = CallbackList([logging_callback, eval_callback])
     
