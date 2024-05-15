@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import os
 from utils.logsUtils import createLogFile
 from utils.callbacks import LoggingCallback
