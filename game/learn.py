@@ -14,8 +14,6 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoMod
 timesteps = 2000000
 mazos = 8
 
-timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-
 # wandb.init(
 #     project="jack-ia",
 #     config={
@@ -40,7 +38,7 @@ models = [
     #DQN("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
     #DQN("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
     #DQN("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
+    #DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
@@ -49,10 +47,13 @@ models = [
 
 for model in models:
     algorithm = model.__class__.__name__
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     save_path = os.path.join("RL_Models", algorithm + "_" + timestamp)
 
     log_freq = 1
     if algorithm == "DQN": 
+        log_freq = 100
+    if algorithm == "A2C":
         log_freq = 100
 
     stop_callback = StopTrainingOnNoModelImprovement(
