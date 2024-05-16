@@ -1,0 +1,7 @@
+Date: 15/05/2024 21:24:33
+Algorithm: DQN
+Timesteps (Matches): 2000000
+Decks: 8
+Rewards (Win, Lose, Tie): 2 -1 0
+Ignored cards: 50
+Observation space: Cartas previas, player, dealer
