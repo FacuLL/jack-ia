@@ -1,0 +1,7 @@
+Date: 16/05/2024 10:55:04
+Algorithm: A2C
+Timesteps (Matches): 2000000
+Decks: 8
+Rewards (Win, Lose, Tie): 1 -1 0
+Ignored cards: 0
+Observation space: Cartas previas, player, dealer
