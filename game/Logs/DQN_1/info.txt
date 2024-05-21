@@ -1,4 +1,4 @@
-Date: 15/05/2024 16:29:21
+Date: 20/05/2024 15:27:17
 Algorithm: DQN
 Timesteps (Matches): 2000000
 Decks: 8

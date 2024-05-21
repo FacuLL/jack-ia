@@ -1,7 +1,0 @@
-Date: <current date and time>
-Algorithm: PPO
-Timesteps (Matches): 2000000
-Decks: 8
-Rewards (Win, Lose, Tie): 2 -1 0
-Ignored cards: 0
-Observation space: Cartas completas dealer-player-previas

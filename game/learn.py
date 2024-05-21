@@ -35,14 +35,14 @@ both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=
 log_path = os.path.join("Logs")
 
 models = [
-    #DQN("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
-    #DQN("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
-    #DQN("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    #DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
-    A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
-    A2C("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
-    A2C("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
-    A2C("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
+    DQN("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path),
+    #A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    #A2C("MultiInputPolicy", ignored_env, verbose=1, tensorboard_log=log_path),
+    #A2C("MultiInputPolicy", winrew_env, verbose=1, tensorboard_log=log_path),
+    #A2C("MultiInputPolicy", both_env, verbose=1, tensorboard_log=log_path)
 ]
 
 for model in models:
