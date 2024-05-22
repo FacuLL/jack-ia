@@ -35,7 +35,7 @@ class Enviroment(Env):
         info = {}
         done = False
         truncated = False
-        #HIT
+        # HIT
         if action==1: 
             self.giveCard(self.player)
             if self.hasLost(self.player):
