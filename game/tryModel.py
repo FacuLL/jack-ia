@@ -6,9 +6,9 @@ from stable_baselines3 import PPO, DQN, A2C
 
 mazos = 8
 episodes = 1000
-env = Enviroment(mazos, Player(), Dealer(), ignoredCards=50)
+env = Enviroment(mazos, Player(), Dealer(), ignoredCards=350)
 
-model_path = os.path.join("RL_Models", "DQN_20240520-152717", "best_model")
+model_path = os.path.join("RL_Models", "DQN_5", "best_model")
 model = DQN.load(model_path, env=env)
 
 wins = 0

@@ -11,7 +11,7 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoMod
 # import wandb
 # from wandb.integration.sb3 import WandbCallback
 
-timesteps = 2000000
+timesteps = 4000000
 mazos = 8
 
 # wandb.init(
@@ -28,15 +28,25 @@ mazos = 8
 # )
 
 default_env = Monitor(Enviroment(mazos, Player(), Dealer()))
-ignored_env = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=50))
 winrew_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2))
 both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=50))
-ignored_env_400 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=400))
+
+ignored_env_385 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=350))
+ignored_env_350 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=350))
+ignored_env_300 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=300))
+ignored_env_250 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=250))
+ignored_env_200 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=200))
+ignored_env_50 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=50))
 
 log_path = os.path.join("Logs")
 
 models = [
-    DQN("MultiInputPolicy", ignored_env_400, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env_385, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env_350, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env_300, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env_250, verbose=1, tensorboard_log=log_path),
+    DQN("MultiInputPolicy", ignored_env_200, verbose=1, tensorboard_log=log_path),
+
 ]
 
 for model in models:
