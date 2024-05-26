@@ -31,12 +31,13 @@ default_env = Monitor(Enviroment(mazos, Player(), Dealer()))
 ignored_env = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=50))
 winrew_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2))
 both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=50))
-ignored_env_400 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=400))
+ignored_env_250 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=250))
 
 log_path = os.path.join("Logs")
 
 models = [
-    DQN("MultiInputPolicy", ignored_env_400, verbose=1, tensorboard_log=log_path),
+    PPO("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
 ]
 
 for model in models:
