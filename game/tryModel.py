@@ -12,7 +12,7 @@ timeFreq = 1000
 env = Enviroment(mazos, Player(), Dealer())
 
 # Load model
-model_path = os.path.join("RL_Models", "DQN_20240520-152717", "best_model")
+model_path = os.path.join("RL_Models", "DQN_1", "best_model")
 model = DQN.load(model_path, env=env)
 
 # Variables
@@ -24,24 +24,30 @@ firstRoundsLoses = 0
 lastRoundsWins = 0
 lastRoundsLoses = 0
 
-timeAverage = 0
-times = []
+totalTimes = []
+seconds = 0
+
+timestepsCount = 0
 
 for episode in range(episodes):
     obs, info = env.reset()
     done = False
     score = 0
-    ronda = 0
+    round = 0
 
     roundResults = []
 
     while not done:
-        ronda+=1
+        timestepsCount+=1
+        round+=1
         start = time.time()
         action = model.predict(obs)[0]
         end = time.time()
-        if ((episode+1) % timeFreq == 0):
-            times.push(end - start)
+        seconds += (end - start)
+        if (timestepsCount % timeFreq == 0):
+            totalTimes.append(seconds)
+            print("Tiempo de 1000 decisiones: " + str(seconds) + " segundos")
+            seconds = 0
         obs, reward, done, truncated, info = env.step(action)
         score+=reward
         if "result" in info:
@@ -68,5 +74,5 @@ for episode in range(episodes):
 print("Promedio victorias en " + episodes + " partidas: " + str(wins / (wins + loses) * 100) + "%")
 print("Promedio victorias en primeras 10 rondas: " + str(firstRoundsWins / (firstRoundsWins + firstRoundsLoses) * 100) + "%")
 print("Promedio victorias en ultimas 10 rondas: " + str(lastRoundsWins / (lastRoundsWins + lastRoundsLoses) * 100) + "%")
-print("Promedio tiempo de " + timeFreq + " decisiones: " + str(sum(times) / len(times)) + " segundos")
+print("Promedio tiempo de " + timeFreq + " decisiones: " + str(sum(totalTimes) / len(totalTimes)) + " segundos")
 env.close()
