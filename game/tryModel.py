@@ -7,8 +7,8 @@ from stable_baselines3 import PPO, DQN, A2C
 
 # General parameters
 mazos = 8
-episodes = 50000
-timeFreq = 1000
+episodes = 1000
+timeFreq = 10
 env = Enviroment(mazos, Player(), Dealer())
 
 # Load model
@@ -46,7 +46,7 @@ for episode in range(episodes):
         seconds += (end - start)
         if (timestepsCount % timeFreq == 0):
             totalTimes.append(seconds)
-            print("Tiempo de 1000 decisiones: " + str(seconds) + " segundos")
+            print("Tiempo de " + str(timeFreq) + " decisiones: " + str(seconds) + " segundos")
             seconds = 0
         obs, reward, done, truncated, info = env.step(action)
         score+=reward
@@ -70,9 +70,9 @@ for episode in range(episodes):
         if result == "lose":
             lastRoundsLoses+=1
 
-    print("Partida ", episode+1, " Puntaje ", score)
-print("Promedio victorias en " + episodes + " partidas: " + str(wins / (wins + loses) * 100) + "%")
+    print("Partida ", str(episode+1), " Puntaje ", str(score))
+print("Promedio victorias en " + str(episodes) + " partidas: " + str(wins / (wins + loses) * 100) + "%")
 print("Promedio victorias en primeras 10 rondas: " + str(firstRoundsWins / (firstRoundsWins + firstRoundsLoses) * 100) + "%")
 print("Promedio victorias en ultimas 10 rondas: " + str(lastRoundsWins / (lastRoundsWins + lastRoundsLoses) * 100) + "%")
-print("Promedio tiempo de " + timeFreq + " decisiones: " + str(sum(totalTimes) / len(totalTimes)) + " segundos")
+print("Promedio tiempo de " + str(timeFreq) + " decisiones: " + str(sum(totalTimes) / len(totalTimes)) + " segundos")
 env.close()
