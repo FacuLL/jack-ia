@@ -11,7 +11,7 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoMod
 # import wandb
 # from wandb.integration.sb3 import WandbCallback
 
-timesteps = 2000000
+timesteps = 4000000
 mazos = 8
 
 # wandb.init(
@@ -28,7 +28,6 @@ mazos = 8
 # )
 
 default_env = Monitor(Enviroment(mazos, Player(), Dealer()))
-ignored_env = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=50))
 winrew_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2))
 both_env = Monitor(Enviroment(mazos, Player(), Dealer(), winrew=2, ignoredCards=50))
 ignored_env_250 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=250))
