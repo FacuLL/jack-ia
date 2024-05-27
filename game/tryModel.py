@@ -7,13 +7,13 @@ from stable_baselines3 import PPO, DQN, A2C
 
 # General parameters
 mazos = 8
-episodes = 1000
-timeFreq = 10
+episodes = 100
+timeFreq = 1
 env = Enviroment(mazos, Player(), Dealer())
 
 # Load model
-model_path = os.path.join("RL_Models", "DQN_1", "best_model")
-model = DQN.load(model_path, env=env)
+model_path = os.path.join("RL_Models", "A2C_20240526-194244", "best_model")
+model = A2C.load(model_path, env=env)
 
 # Variables
 wins = 0

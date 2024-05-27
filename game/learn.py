@@ -11,7 +11,7 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoMod
 # import wandb
 # from wandb.integration.sb3 import WandbCallback
 
-timesteps = 4000000
+timesteps = 2000000
 mazos = 8
 
 # wandb.init(
@@ -35,7 +35,7 @@ ignored_env_250 = Monitor(Enviroment(mazos, Player(), Dealer(), ignoredCards=250
 log_path = os.path.join("Logs")
 
 models = [
-    PPO("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
+    #PPO("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
     A2C("MultiInputPolicy", default_env, verbose=1, tensorboard_log=log_path),
 ]
 
